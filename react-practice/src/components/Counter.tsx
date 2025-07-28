@@ -3,11 +3,11 @@ type CounterProps = {
   onClick: () => void;
 };
 
-function Counter({ count, onClick }: CounterProps) {
+function Counter(props: CounterProps) {
   return (
     <div>
-      <p>ボタンを {count} 回クリックしました。</p>
-      <button onClick={onClick}>クリック！</button>
+      <p>ボタンを {props.count} 回クリックしました。</p>
+      <button onClick={props.onClick}>クリック！</button>
     </div>
   );
 }

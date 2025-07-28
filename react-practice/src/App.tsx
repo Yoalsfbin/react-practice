@@ -1,26 +1,26 @@
-import { useState, useEffect } from "react";
 import Greeting from "./components/Greeting";
+import InputArea from "./components/InputArea";
 import Counter from "./components/Counter";
+import FruitList from "./components/FruitList";
+import { useState } from "react";
 
 function App() {
   const [name, setName] = useState("名無し");
   const [count, setCount] = useState(0);
 
-  useEffect(() => {
-    console.log(`名前が変更されました：${name}`);
-  }, [name]);
-
   return (
     <div style={{ padding: "2rem" }}>
+      <h1>React練習アプリ</h1>
+
+      {/* 名前セクション */}
       <Greeting name={name} />
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="名前を入力"
-      />
-      <br />
+      <InputArea onNameChange={(newName) => setName(newName)} />
+
+      {/* カウントセクション */}
       <Counter count={count} onClick={() => setCount(count + 1)} />
+
+      {/* フルーツセクション（新規） */}
+      <FruitList />
     </div>
   );
 }
