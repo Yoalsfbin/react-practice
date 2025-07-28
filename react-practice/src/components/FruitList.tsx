@@ -11,6 +11,11 @@ function FruitSection() {
     setFruit("");
   };
 
+  const handleDeleteFruit = (indexToDelete: number) => {
+    const newList = fruitList.filter((_, index) => index !== indexToDelete);
+    setFruitList(newList);
+  };
+
   return (
     <div style={{ marginTop: "2rem" }}>
       <h2>🍎 フルーツを追加しよう</h2>
@@ -26,9 +31,17 @@ function FruitSection() {
         追加
       </button>
 
-      <ul>
+      <ul style={{ listStyle: "none", paddingLeft: 0 }}>
         {fruitList.map((f, index) => (
-          <li key={index}>{f}</li>
+          <li key={index} style={{ margin: "0.5rem 0" }}>
+            {f}
+            <button
+              onClick={() => handleDeleteFruit(index)}
+              style={{ marginLeft: "1rem", color: "red" }}
+            >
+              ❌
+            </button>
+          </li>
         ))}
       </ul>
     </div>
