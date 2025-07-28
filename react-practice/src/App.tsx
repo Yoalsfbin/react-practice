@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Greeting from "./components/Greeting";
+import Counter from "./components/Counter";
 
 function App() {
   const [name, setName] = useState("名無し");
@@ -11,8 +12,7 @@ function App() {
 
   return (
     <div style={{ padding: "2rem" }}>
-      <Greeting name={name} /> {/* ← propsで名前を渡す */}
-      <p>ボタンを {count} 回クリックしました。</p>
+      <Greeting name={name} />
       <input
         type="text"
         value={name}
@@ -20,7 +20,7 @@ function App() {
         placeholder="名前を入力"
       />
       <br />
-      <button onClick={() => setCount(count + 1)}>クリック！</button>
+      <Counter count={count} onClick={() => setCount(count + 1)} />
     </div>
   );
 }
