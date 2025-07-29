@@ -1,1 +1,1 @@
-💡Reactの理解を深めるために作成
+💡React（TypeScript）の理解を深めるためのリポジトリ
