@@ -1,4 +1,3 @@
-// src/components/FruitSection.tsx
 import { useState } from "react";
 
 function FruitSection() {
