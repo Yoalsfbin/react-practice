@@ -3,13 +3,14 @@ import Greeting from "./components/Greeting";
 import InputArea from "./components/InputArea";
 import Counter from "./components/Counter";
 import FruitList from "./components/FruitList";
+import UserInfo from "./components/UserInfo";
 
 function App() {
   const [name, setName] = useState("名無し");
   const [count, setCount] = useState(0);
-  const [activeTab, setActiveTab] = useState<"greeting" | "counter" | "fruit">(
-    "greeting"
-  );
+  const [activeTab, setActiveTab] = useState<
+    "greeting" | "counter" | "fruit" | "user"
+  >("greeting");
 
   return (
     <div style={{ padding: "2rem" }}>
@@ -30,6 +31,7 @@ function App() {
           カウント
         </button>
         <button onClick={() => setActiveTab("fruit")}>フルーツ</button>
+        <button onClick={() => setActiveTab("user")}>ユーザー</button>
       </div>
 
       {/* タブに応じた表示切り替え */}
@@ -45,6 +47,7 @@ function App() {
       )}
 
       {activeTab === "fruit" && <FruitList />}
+      {activeTab === "user" && <UserInfo />}
     </div>
   );
 }
