@@ -2,6 +2,7 @@ import { useState } from "react";
 import Greeting from "./components/Greeting";
 import InputArea from "./components/InputArea";
 import Counter from "./components/Counter";
+import FruitInput from "./components/FruitInput";
 import FruitList from "./components/FruitList";
 import UserInfo from "./components/UserInfo";
 
@@ -11,6 +12,26 @@ function App() {
   const [activeTab, setActiveTab] = useState<
     "greeting" | "counter" | "fruit" | "user"
   >("greeting");
+
+  //フルーツセクション用
+  const [fruits, setFruits] = useState<string[]>([]);
+
+  const handleAddFruit = (newFruit: string) => {
+    if (newFruit.trim() === "") return;
+    setFruits([...fruits, newFruit]);
+  };
+
+  const handleDeleteFruit = (indexToDelete: number) => {
+    const newList = fruits.filter((_, index) => index !== indexToDelete);
+    setFruits(newList);
+  };
+
+  const handleUpdateFruit = (index: number, newName: string) => {
+    if (newName.trim() === "") return;
+    const newList = [...fruits];
+    newList[index] = newName;
+    setFruits(newList);
+  };
 
   return (
     <div style={{ padding: "2rem" }}>
@@ -46,7 +67,16 @@ function App() {
         <Counter count={count} onClick={() => setCount(count + 1)} />
       )}
 
-      {activeTab === "fruit" && <FruitList />}
+      {activeTab === "fruit" && (
+        <>
+          <FruitInput onAddFruit={handleAddFruit} />
+          <FruitList
+            fruits={fruits}
+            onDeleteFruit={handleDeleteFruit}
+            onUpdateFruit={handleUpdateFruit}
+          />
+        </>
+      )}
       {activeTab === "user" && <UserInfo />}
     </div>
   );
