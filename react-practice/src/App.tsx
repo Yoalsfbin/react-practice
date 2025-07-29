@@ -5,12 +5,21 @@ import Counter from "./components/Counter";
 import FruitInput from "./components/FruitInput";
 import FruitList from "./components/FruitList";
 import UserInfo from "./components/UserInfo";
+import TodoInput from "./components/TodoInput";
+import TodoList from "./components/TodoList";
+
+// TODOリスト
+type Task = {
+  id: number;
+  title: string;
+  done: boolean;
+};
 
 function App() {
   const [name, setName] = useState("名無し");
   const [count, setCount] = useState(0);
   const [activeTab, setActiveTab] = useState<
-    "greeting" | "counter" | "fruit" | "user"
+    "greeting" | "counter" | "fruit" | "user" | "task"
   >("greeting");
 
   //フルーツセクション用
@@ -33,6 +42,29 @@ function App() {
     setFruits(newList);
   };
 
+  // TODOリスト
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  const handleAddTask = (title: string) => {
+    const newTask: Task = {
+      id: Date.now(),
+      title,
+      done: false,
+    };
+    setTasks([...tasks, newTask]);
+  };
+
+  const handleToggleDone = (id: number) => {
+    const updated = tasks.map((task) =>
+      task.id === id ? { ...task, done: !task.done } : task
+    );
+    setTasks(updated);
+  };
+
+  const handleDelete = (id: number) => {
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
+
   return (
     <div style={{ padding: "2rem" }}>
       <h1>React練習アプリ</h1>
@@ -51,8 +83,24 @@ function App() {
         >
           カウント
         </button>
-        <button onClick={() => setActiveTab("fruit")}>フルーツ</button>
-        <button onClick={() => setActiveTab("user")}>ユーザー</button>
+        <button
+          onClick={() => setActiveTab("fruit")}
+          style={{ marginRight: "0.5rem" }}
+        >
+          フルーツ
+        </button>
+        <button
+          onClick={() => setActiveTab("user")}
+          style={{ marginRight: "0.5rem" }}
+        >
+          ユーザー
+        </button>
+        <button
+          onClick={() => setActiveTab("task")}
+          style={{ marginRight: "0.5rem" }}
+        >
+          Todoリスト
+        </button>
       </div>
 
       {/* タブに応じた表示切り替え */}
@@ -78,6 +126,16 @@ function App() {
         </>
       )}
       {activeTab === "user" && <UserInfo />}
+      {activeTab === "task" && (
+        <>
+          <TodoInput onAdd={handleAddTask} />
+          <TodoList
+            tasks={tasks}
+            onToggle={handleToggleDone}
+            onDelete={handleDelete}
+          />
+        </>
+      )}
     </div>
   );
 }
